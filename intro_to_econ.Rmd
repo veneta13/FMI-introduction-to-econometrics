@@ -88,3 +88,139 @@ plot(x=x,
      main='Bi(20, 0.98)'
 )
 ```
+
+## Упражнение 2 (10.10.2023)
+
+```{r}
+library(distr) # for the 'AbscontDistribution' function
+library(distrEx) # for E(X) and var(X)
+library(readxl) # for read_excel
+library(BSDA) # for z.test()
+```
+
+### Задача 1
+
+Let X have PDF f(x) = 3x^2, 0 < x < 1 and find P(0.14 < X < 0.71)
+
+```{r}
+f <- function(x) {
+  3 * x^2
+}
+```
+
+```{r}
+integrate(f, lower=0.14, upper=0.71)
+```
+
+```{r}
+X <- AbscontDistribution(d=f, low1=0, up1=1)
+```
+
+```{r}
+E(X); var(X)
+```
+
+### Задача 2
+
+Suppose in a mathematics quiz there are 30 participants. A question is given to all 30 participants, and the time allowed to answer it is 25 seconds. Find the probability of a random participant responding within 6 seconds?
+
+```{r}
+punif(6, min=0, max=25)
+```
+
+### Задача 3
+
+Suppose a fight is about to land and the announcement says that the expected time for the plane to will definitely land is in the next 30 minutes. What is the average time before the fight lands? Find the probability of getting the fight landing between 25 and 30 minutes and between 10 and 20 minutes using R.
+
+```{r}
+qunif(0.5, min=0, max=30)
+```
+
+```{r}
+punif(30, 0, 30) - punif(25, 0, 30); punif(25, 0, 30, lower.tail=FALSE)
+```
+
+```{r}
+punif(20, 0, 30) - punif(10, 0, 30)
+```
+
+### Задача 4
+
+Assume we have a uniform distribution with density f(x) = 1/23, 0 <= x <= 23, X is U(0, 23). Determine the 90th percentile and generate 3 random numbers from the distribution.
+
+```{r}
+qunif(0.9, 0, 23)  
+```
+
+```{r}
+runif(3, 0, 23)
+```
+
+
+### Задача 5
+
+Suppose X is distributed as normal with mean 10 and standard deviation 2. Find the probability that X is less than 9, greater than 11, between 9 and 11.
+Also, determine the median and 90th percentile of the distribution.
+Finally, determine the probability of being within 1 standard deviation, within 2 standard deviations and within 3 standard deviations of the mean.
+
+```{r}
+pnorm(9, mean=10, sd=2)
+```
+
+```{r}
+pnorm(11, mean=10, sd=2, lower.tail=FALSE)
+```
+
+```{r}
+pnorm(11, 10, 2) - pnorm(9, 10, 2)
+```
+
+```{r}
+qnorm(0.9, 10, 2); qnorm(0.9, 10, 2)
+```
+```{r}
+pnorm(12, 10, 2) - pnorm(8, 10, 2)
+```
+
+```{r}
+pnorm(14, 10, 2) - pnorm(6, 10, 2)
+```
+
+```{r}
+pnorm(16, 10, 2) - pnorm(4, 10, 2)
+```
+
+### Задача 6
+
+A toy manufacturer undertakes regular assessment of employee performance. This performance testing consists of measuring the number of a toys that employees can make per hour, with the historical data recording a rate of 85$ per hour with a standard deviation of 15 units. All new employees are tested after a period of training. A new employee is tested on 45 separate random occasions and found to have an output given in the data file *toy_manufacturer.xlsx*. 
+Does this indicate that the new employee's output is significantly different from the average output? Test at the 5% significance level.
+
+```{r}
+toys <- read_xlsx('toy_manufacturer.xlsx')
+toys
+```
+
+```{r}
+bar_X <- mean(toys$`Sample data`)
+bar_X
+```
+
+```{r}
+sigma <- 15
+n <- length(toys$`Sample data`)
+mu_0 <- 85
+
+z <- (bar_X - mu_0) / (sigma/sqrt(n))
+z
+```
+
+```{r}
+p_value <- 2 * (1 - pnorm(1.67))
+p_value
+```
+
+```{r}
+z.test(toys$`Sample data`, mu=85, sigma.x=15, conf.level=0.95)
+```
+
+We fail to reject the null hypothesis.
