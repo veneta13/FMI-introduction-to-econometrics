@@ -1661,7 +1661,7 @@ print(qbinom(p=0.875, size=3, prob=1/2))</code></pre>
 <pre><code>## [1] 2</code></pre>
 <pre class="r"><code># rbinom -&gt; sample Bi(size, prob)
 print(rbinom(n=5, size=10, prob=1/2))</code></pre>
-<pre><code>## [1] 7 5 4 6 4</code></pre>
+<pre><code>## [1] 4 2 8 6 4</code></pre>
 </div>
 <div id="задача-2" class="section level3">
 <h3>Задача 2</h3>
@@ -1694,6 +1694,130 @@ print(prob)</code></pre>
      main=&#39;Bi(20, 0.98)&#39;
 )</code></pre>
 <p><img src="data:image/png;base64,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" width="672" /></p>
+</div>
+</div>
+<div id="упражнение-2-10.10.2023" class="section level2">
+<h2>Упражнение 2 (10.10.2023)</h2>
+<pre class="r"><code>library(distr) # for the &#39;AbscontDistribution&#39; function
+library(distrEx) # for E(X) and var(X)
+library(readxl) # for read_excel
+library(BSDA) # for z.test()</code></pre>
+<div id="задача-1-1" class="section level3">
+<h3>Задача 1</h3>
+<p>Let X have PDF f(x) = 3x^2, 0 &lt; x &lt; 1 and find P(0.14 &lt; X
+&lt; 0.71)</p>
+<pre class="r"><code>f &lt;- function(x) {
+  3 * x^2
+}</code></pre>
+<pre class="r"><code>integrate(f, lower=0.14, upper=0.71)</code></pre>
+<pre><code>## 0.355167 with absolute error &lt; 3.9e-15</code></pre>
+<pre class="r"><code>X &lt;- AbscontDistribution(d=f, low1=0, up1=1)</code></pre>
+<pre class="r"><code>E(X); var(X)</code></pre>
+<pre><code>## [1] 0.7496337</code></pre>
+<pre><code>## [1] 0.03768305</code></pre>
+</div>
+<div id="задача-2-1" class="section level3">
+<h3>Задача 2</h3>
+<p>Suppose in a mathematics quiz there are 30 participants. A question
+is given to all 30 participants, and the time allowed to answer it is 25
+seconds. Find the probability of a random participant responding within
+6 seconds?</p>
+<pre class="r"><code>punif(6, min=0, max=25)</code></pre>
+<pre><code>## [1] 0.24</code></pre>
+</div>
+<div id="задача-3" class="section level3">
+<h3>Задача 3</h3>
+<p>Suppose a fight is about to land and the announcement says that the
+expected time for the plane to will definitely land is in the next 30
+minutes. What is the average time before the fight lands? Find the
+probability of getting the fight landing between 25 and 30 minutes and
+between 10 and 20 minutes using R.</p>
+<pre class="r"><code>qunif(0.5, min=0, max=30)</code></pre>
+<pre><code>## [1] 15</code></pre>
+<pre class="r"><code>punif(30, 0, 30) - punif(25, 0, 30); punif(25, 0, 30, lower.tail=FALSE)</code></pre>
+<pre><code>## [1] 0.1666667</code></pre>
+<pre><code>## [1] 0.1666667</code></pre>
+<pre class="r"><code>punif(20, 0, 30) - punif(10, 0, 30)</code></pre>
+<pre><code>## [1] 0.3333333</code></pre>
+</div>
+<div id="задача-4" class="section level3">
+<h3>Задача 4</h3>
+<p>Assume we have a uniform distribution with density f(x) = 1/23, 0
+&lt;= x &lt;= 23, X is U(0, 23). Determine the 90th percentile and
+generate 3 random numbers from the distribution.</p>
+<pre class="r"><code>qunif(0.9, 0, 23)  </code></pre>
+<pre><code>## [1] 20.7</code></pre>
+<pre class="r"><code>runif(3, 0, 23)</code></pre>
+<pre><code>## [1] 15.99858 11.56949 14.47717</code></pre>
+</div>
+<div id="задача-5" class="section level3">
+<h3>Задача 5</h3>
+<p>Suppose X is distributed as normal with mean 10 and standard
+deviation 2. Find the probability that X is less than 9, greater than
+11, between 9 and 11. Also, determine the median and 90th percentile of
+the distribution. Finally, determine the probability of being within 1
+standard deviation, within 2 standard deviations and within 3 standard
+deviations of the mean.</p>
+<pre class="r"><code>pnorm(9, mean=10, sd=2)</code></pre>
+<pre><code>## [1] 0.3085375</code></pre>
+<pre class="r"><code>pnorm(11, mean=10, sd=2, lower.tail=FALSE)</code></pre>
+<pre><code>## [1] 0.3085375</code></pre>
+<pre class="r"><code>pnorm(11, 10, 2) - pnorm(9, 10, 2)</code></pre>
+<pre><code>## [1] 0.3829249</code></pre>
+<pre class="r"><code>qnorm(0.9, 10, 2); qnorm(0.9, 10, 2)</code></pre>
+<pre><code>## [1] 12.5631</code></pre>
+<pre><code>## [1] 12.5631</code></pre>
+<pre class="r"><code>pnorm(12, 10, 2) - pnorm(8, 10, 2)</code></pre>
+<pre><code>## [1] 0.6826895</code></pre>
+<pre class="r"><code>pnorm(14, 10, 2) - pnorm(6, 10, 2)</code></pre>
+<pre><code>## [1] 0.9544997</code></pre>
+<pre class="r"><code>pnorm(16, 10, 2) - pnorm(4, 10, 2)</code></pre>
+<pre><code>## [1] 0.9973002</code></pre>
+</div>
+<div id="задача-6" class="section level3">
+<h3>Задача 6</h3>
+<p>A toy manufacturer undertakes regular assessment of employee
+performance. This performance testing consists of measuring the number
+of a toys that employees can make per hour, with the historical data
+recording a rate of 85$ per hour with a standard deviation of 15 units.
+All new employees are tested after a period of training. A new employee
+is tested on 45 separate random occasions and found to have an output
+given in the data file <em>toy_manufacturer.xlsx</em>. Does this
+indicate that the new employee’s output is significantly different from
+the average output? Test at the 5% significance level.</p>
+<pre class="r"><code>toys &lt;- read_xlsx(&#39;toy_manufacturer.xlsx&#39;)
+toys</code></pre>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["ID"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["Sample data"],"name":[2],"type":["dbl"],"align":["right"]}],"data":[{"1":"1","2":"88.6"},{"1":"2","2":"63.8"},{"1":"3","2":"95.6"},{"1":"4","2":"94.4"},{"1":"5","2":"118.2"},{"1":"6","2":"84.4"},{"1":"7","2":"81.6"},{"1":"8","2":"78.6"},{"1":"9","2":"56.6"},{"1":"10","2":"77.8"},{"1":"11","2":"87.2"},{"1":"12","2":"82.0"},{"1":"13","2":"100.3"},{"1":"14","2":"91.6"},{"1":"15","2":"126.2"},{"1":"16","2":"99.8"},{"1":"17","2":"94.1"},{"1":"18","2":"92.5"},{"1":"19","2":"96.0"},{"1":"20","2":"85.8"},{"1":"21","2":"69.0"},{"1":"22","2":"90.3"},{"1":"23","2":"88.0"},{"1":"24","2":"81.8"},{"1":"25","2":"88.8"},{"1":"26","2":"83.2"},{"1":"27","2":"94.0"},{"1":"28","2":"96.7"},{"1":"29","2":"79.9"},{"1":"30","2":"93.1"},{"1":"31","2":"101.7"},{"1":"32","2":"55.5"},{"1":"33","2":"88.6"},{"1":"34","2":"79.3"},{"1":"35","2":"80.7"},{"1":"36","2":"93.3"},{"1":"37","2":"102.5"},{"1":"38","2":"71.9"},{"1":"39","2":"91.1"},{"1":"40","2":"109.6"},{"1":"41","2":"96.0"},{"1":"42","2":"82.6"},{"1":"43","2":"108.3"},{"1":"44","2":"95.5"},{"1":"45","2":"76.8"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+<pre class="r"><code>bar_X &lt;- mean(toys$`Sample data`)
+bar_X</code></pre>
+<pre><code>## [1] 88.74</code></pre>
+<pre class="r"><code>sigma &lt;- 15
+n &lt;- length(toys$`Sample data`)
+mu_0 &lt;- 85
+
+z &lt;- (bar_X - mu_0) / (sigma/sqrt(n))
+z</code></pre>
+<pre><code>## [1] 1.672579</code></pre>
+<pre class="r"><code>p_value &lt;- 2 * (1 - pnorm(1.67))
+p_value</code></pre>
+<pre><code>## [1] 0.09491936</code></pre>
+<pre class="r"><code>z.test(toys$`Sample data`, mu=85, sigma.x=15, conf.level=0.95)</code></pre>
+<pre><code>## 
+##  One-sample z-Test
+## 
+## data:  toys$`Sample data`
+## z = 1.6726, p-value = 0.09441
+## alternative hypothesis: true mean is not equal to 85
+## 95 percent confidence interval:
+##  84.35739 93.12261
+## sample estimates:
+## mean of x 
+##     88.74</code></pre>
+<p>We fail to reject the null hypothesis.</p>
 </div>
 </div>
 
