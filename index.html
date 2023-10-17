@@ -1661,7 +1661,7 @@ print(qbinom(p=0.875, size=3, prob=1/2))</code></pre>
 <pre><code>## [1] 2</code></pre>
 <pre class="r"><code># rbinom -&gt; sample Bi(size, prob)
 print(rbinom(n=5, size=10, prob=1/2))</code></pre>
-<pre><code>## [1] 4 2 8 6 4</code></pre>
+<pre><code>## [1] 6 3 4 3 6</code></pre>
 </div>
 <div id="задача-2" class="section level3">
 <h3>Задача 2</h3>
@@ -1748,7 +1748,7 @@ generate 3 random numbers from the distribution.</p>
 <pre class="r"><code>qunif(0.9, 0, 23)  </code></pre>
 <pre><code>## [1] 20.7</code></pre>
 <pre class="r"><code>runif(3, 0, 23)</code></pre>
-<pre><code>## [1] 15.99858 11.56949 14.47717</code></pre>
+<pre><code>## [1] 15.370567  9.462102 10.770583</code></pre>
 </div>
 <div id="задача-5" class="section level3">
 <h3>Задача 5</h3>
@@ -1785,7 +1785,7 @@ is tested on 45 separate random occasions and found to have an output
 given in the data file <em>toy_manufacturer.xlsx</em>. Does this
 indicate that the new employee’s output is significantly different from
 the average output? Test at the 5% significance level.</p>
-<pre class="r"><code>toys &lt;- read_xlsx(&#39;toy_manufacturer.xlsx&#39;)
+<pre class="r"><code>toys &lt;- read_xlsx(&#39;data/toy_manufacturer.xlsx&#39;)
 toys</code></pre>
 <div data-pagedtable="false">
 <script data-pagedtable-source type="application/json">
@@ -1819,6 +1819,193 @@ p_value</code></pre>
 ##     88.74</code></pre>
 <p>We fail to reject the null hypothesis.</p>
 </div>
+</div>
+<div id="упражнение-3-17.10.2023" class="section level2">
+<h2>Упражнение 3 (17.10.2023)</h2>
+<pre class="r"><code>wine_df &lt;- read.csv(&#39;data/wine.csv&#39;)
+wine_df</code></pre>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["Year"],"name":[1],"type":["int"],"align":["right"]},{"label":["Price"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["WinterRain"],"name":[3],"type":["int"],"align":["right"]},{"label":["AGST"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["HarvestRain"],"name":[5],"type":["int"],"align":["right"]},{"label":["Age"],"name":[6],"type":["int"],"align":["right"]},{"label":["FrancePop"],"name":[7],"type":["dbl"],"align":["right"]}],"data":[{"1":"1952","2":"7.4950","3":"600","4":"17.1167","5":"160","6":"31","7":"43183.57"},{"1":"1953","2":"8.0393","3":"690","4":"16.7333","5":"80","6":"30","7":"43495.03"},{"1":"1955","2":"7.6858","3":"502","4":"17.1500","5":"130","6":"28","7":"44217.86"},{"1":"1957","2":"6.9845","3":"420","4":"16.1333","5":"110","6":"26","7":"45152.25"},{"1":"1958","2":"6.7772","3":"582","4":"16.4167","5":"187","6":"25","7":"45653.81"},{"1":"1959","2":"8.0757","3":"485","4":"17.4833","5":"187","6":"24","7":"46128.64"},{"1":"1960","2":"6.5188","3":"763","4":"16.4167","5":"290","6":"23","7":"46584.00"},{"1":"1961","2":"8.4937","3":"830","4":"17.3333","5":"38","6":"22","7":"47128.00"},{"1":"1962","2":"7.3880","3":"697","4":"16.3000","5":"52","6":"21","7":"48088.67"},{"1":"1963","2":"6.7127","3":"608","4":"15.7167","5":"155","6":"20","7":"48798.99"},{"1":"1964","2":"7.3094","3":"402","4":"17.2667","5":"96","6":"19","7":"49356.94"},{"1":"1965","2":"6.2518","3":"602","4":"15.3667","5":"267","6":"18","7":"49801.82"},{"1":"1966","2":"7.7443","3":"819","4":"16.5333","5":"86","6":"17","7":"50254.97"},{"1":"1967","2":"6.8398","3":"714","4":"16.2333","5":"118","6":"16","7":"50650.41"},{"1":"1968","2":"6.2435","3":"610","4":"16.2000","5":"292","6":"15","7":"51034.41"},{"1":"1969","2":"6.3459","3":"575","4":"16.5500","5":"244","6":"14","7":"51470.28"},{"1":"1970","2":"7.5883","3":"622","4":"16.6667","5":"89","6":"13","7":"51918.39"},{"1":"1971","2":"7.1934","3":"551","4":"16.7667","5":"112","6":"12","7":"52431.65"},{"1":"1972","2":"6.2049","3":"536","4":"14.9833","5":"158","6":"11","7":"52894.18"},{"1":"1973","2":"6.6367","3":"376","4":"17.0667","5":"123","6":"10","7":"53332.81"},{"1":"1974","2":"6.2941","3":"574","4":"16.3000","5":"184","6":"9","7":"53689.61"},{"1":"1975","2":"7.2920","3":"572","4":"16.9500","5":"171","6":"8","7":"53955.04"},{"1":"1976","2":"7.1211","3":"418","4":"17.6500","5":"247","6":"7","7":"54159.05"},{"1":"1977","2":"6.2587","3":"821","4":"15.5833","5":"87","6":"6","7":"54378.36"},{"1":"1978","2":"7.1860","3":"763","4":"15.8167","5":"51","6":"5","7":"54602.19"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+<pre class="r"><code>summary(wine_df)</code></pre>
+<pre><code>##       Year          Price         WinterRain         AGST        HarvestRain   
+##  Min.   :1952   Min.   :6.205   Min.   :376.0   Min.   :14.98   Min.   : 38.0  
+##  1st Qu.:1960   1st Qu.:6.519   1st Qu.:536.0   1st Qu.:16.20   1st Qu.: 89.0  
+##  Median :1966   Median :7.121   Median :600.0   Median :16.53   Median :130.0  
+##  Mean   :1966   Mean   :7.067   Mean   :605.3   Mean   :16.51   Mean   :148.6  
+##  3rd Qu.:1972   3rd Qu.:7.495   3rd Qu.:697.0   3rd Qu.:17.07   3rd Qu.:187.0  
+##  Max.   :1978   Max.   :8.494   Max.   :830.0   Max.   :17.65   Max.   :292.0  
+##       Age         FrancePop    
+##  Min.   : 5.0   Min.   :43184  
+##  1st Qu.:11.0   1st Qu.:46584  
+##  Median :17.0   Median :50255  
+##  Mean   :17.2   Mean   :49694  
+##  3rd Qu.:23.0   3rd Qu.:52894  
+##  Max.   :31.0   Max.   :54602</code></pre>
+<pre class="r"><code>model1 &lt;- lm(Price ~ AGST, data=wine_df)
+summary(model1)</code></pre>
+<pre><code>## 
+## Call:
+## lm(formula = Price ~ AGST, data = wine_df)
+## 
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -0.78450 -0.23882 -0.03727  0.38992  0.90318 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)  -3.4178     2.4935  -1.371 0.183710    
+## AGST          0.6351     0.1509   4.208 0.000335 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 0.4993 on 23 degrees of freedom
+## Multiple R-squared:  0.435,  Adjusted R-squared:  0.4105 
+## F-statistic: 17.71 on 1 and 23 DF,  p-value: 0.000335</code></pre>
+<p><span class="math display">\[t-value = \frac{Estimate}{Std. Error}.
+Искаме \ да \ е \ (относително) \ голяма \ стойност.\]</span></p>
+<p><span class="math display">\[Pr(&gt;|t|): p-value \ при \ тестване \
+коефициентите \ \beta_i \ \ срещу \ H_0: \beta_i = 0. \ Искаме \ да \ е
+\ малка \ стойност. \]</span> <span class="math display">\[Adjusted \
+R^2: проверяваме \ дали \ не \ сме \ включили \ прекалено \ много \
+променливи.\]</span></p>
+<pre class="r"><code>model2 &lt;- lm(Price ~ .-Year, data=wine_df)
+summary(model2)</code></pre>
+<pre><code>## 
+## Call:
+## lm(formula = Price ~ . - Year, data = wine_df)
+## 
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -0.48179 -0.24662 -0.00726  0.22012  0.51987 
+## 
+## Coefficients:
+##               Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept) -4.504e-01  1.019e+01  -0.044 0.965202    
+## WinterRain   1.043e-03  5.310e-04   1.963 0.064416 .  
+## AGST         6.012e-01  1.030e-01   5.836 1.27e-05 ***
+## HarvestRain -3.958e-03  8.751e-04  -4.523 0.000233 ***
+## Age          5.847e-04  7.900e-02   0.007 0.994172    
+## FrancePop   -4.953e-05  1.667e-04  -0.297 0.769578    
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 0.3019 on 19 degrees of freedom
+## Multiple R-squared:  0.8294, Adjusted R-squared:  0.7845 
+## F-statistic: 18.47 on 5 and 19 DF,  p-value: 1.044e-06</code></pre>
+<pre class="r"><code>model1$residuals</code></pre>
+<pre><code>##           1           2           3           4           5           6 
+##  0.04204258  0.82983774  0.21169394  0.15609432 -0.23119140  0.38991701 
+##           7           8           9          10          11          12 
+## -0.48959140  0.90318115  0.45372410  0.14887461 -0.23882157 -0.08974238 
+##          13          14          15          16          17          18 
+##  0.66185660 -0.05211511 -0.62726647 -0.74714947  0.42113502 -0.03727441 
+##          19          20          21          22          23          24 
+##  0.10685278 -0.78450270 -0.64017590 -0.05508720 -0.67055321 -0.22040381 
+##          25 
+##  0.55866518</code></pre>
+<pre class="r"><code>SSE_model1 &lt;- sum(model1$residuals^2)
+SSE_model1</code></pre>
+<pre><code>## [1] 5.734875</code></pre>
+<pre class="r"><code>SSE_model2 &lt;- sum(model2$residuals^2)
+SSE_model2</code></pre>
+<pre><code>## [1] 1.732113</code></pre>
+<p><strong>Проверка за мултиколинеарност между Age и
+FrancePop</strong></p>
+<p>(линейна зависимост между две “независими” променливи)</p>
+<pre class="r"><code>plot(wine_df$Age, wine_df$FrancePop)</code></pre>
+<p><img src="data:image/png;base64,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" width="672" /></p>
+<pre class="r"><code>cor(wine_df$Age, wine_df$FrancePop)</code></pre>
+<pre><code>## [1] -0.9944851</code></pre>
+<pre class="r"><code>cor(wine_df)</code></pre>
+<pre><code>##                    Year      Price   WinterRain        AGST HarvestRain
+## Year         1.00000000 -0.4477679  0.016970024 -0.24691585  0.02800907
+## Price       -0.44776786  1.0000000  0.136650547  0.65956286 -0.56332190
+## WinterRain   0.01697002  0.1366505  1.000000000 -0.32109061 -0.27544085
+## AGST        -0.24691585  0.6595629 -0.321090611  1.00000000 -0.06449593
+## HarvestRain  0.02800907 -0.5633219 -0.275440854 -0.06449593  1.00000000
+## Age         -1.00000000  0.4477679 -0.016970024  0.24691585 -0.02800907
+## FrancePop    0.99448510 -0.4668616 -0.001621627 -0.25916227  0.04126439
+##                     Age    FrancePop
+## Year        -1.00000000  0.994485097
+## Price        0.44776786 -0.466861641
+## WinterRain  -0.01697002 -0.001621627
+## AGST         0.24691585 -0.259162274
+## HarvestRain -0.02800907  0.041264394
+## Age          1.00000000 -0.994485097
+## FrancePop   -0.99448510  1.000000000</code></pre>
+<pre class="r"><code>model3 &lt;- lm(Price ~ AGST + HarvestRain + Age, data=wine_df)
+summary(model3)</code></pre>
+<pre><code>## 
+## Call:
+## lm(formula = Price ~ AGST + HarvestRain + Age, data = wine_df)
+## 
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -0.66258 -0.22953 -0.00268  0.27236  0.49391 
+## 
+## Coefficients:
+##               Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept) -1.4778196  1.6274142  -0.908  0.37414    
+## AGST         0.5322922  0.0995343   5.348 2.65e-05 ***
+## HarvestRain -0.0045386  0.0008757  -5.183 3.90e-05 ***
+## Age          0.0250875  0.0087249   2.875  0.00905 ** 
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 0.3186 on 21 degrees of freedom
+## Multiple R-squared:   0.79,  Adjusted R-squared:   0.76 
+## F-statistic: 26.34 on 3 and 21 DF,  p-value: 2.596e-07</code></pre>
+<pre class="r"><code>model4 &lt;- lm(Price ~ AGST + HarvestRain + Age + WinterRain, data=wine_df)
+summary(model4)</code></pre>
+<pre><code>## 
+## Call:
+## lm(formula = Price ~ AGST + HarvestRain + Age + WinterRain, data = wine_df)
+## 
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -0.45470 -0.24273  0.00752  0.19773  0.53637 
+## 
+## Coefficients:
+##               Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept) -3.4299802  1.7658975  -1.942 0.066311 .  
+## AGST         0.6072093  0.0987022   6.152  5.2e-06 ***
+## HarvestRain -0.0039715  0.0008538  -4.652 0.000154 ***
+## Age          0.0239308  0.0080969   2.956 0.007819 ** 
+## WinterRain   0.0010755  0.0005073   2.120 0.046694 *  
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 0.295 on 20 degrees of freedom
+## Multiple R-squared:  0.8286, Adjusted R-squared:  0.7943 
+## F-statistic: 24.17 on 4 and 20 DF,  p-value: 2.036e-07</code></pre>
+<pre class="r"><code>SSE_model4 &lt;- sum(model4$residuals^2)
+SSE_model4</code></pre>
+<pre><code>## [1] 1.740162</code></pre>
+<pre class="r"><code>wine_test_df &lt;- read.csv(&#39;data/wine_test.csv&#39;)
+wine_test_df</code></pre>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["Year"],"name":[1],"type":["int"],"align":["right"]},{"label":["Price"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["WinterRain"],"name":[3],"type":["int"],"align":["right"]},{"label":["AGST"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["HarvestRain"],"name":[5],"type":["int"],"align":["right"]},{"label":["Age"],"name":[6],"type":["int"],"align":["right"]},{"label":["FrancePop"],"name":[7],"type":["dbl"],"align":["right"]}],"data":[{"1":"1979","2":"6.9541","3":"717","4":"16.1667","5":"122","6":"4","7":"54835.83"},{"1":"1980","2":"6.4979","3":"578","4":"16.0000","5":"74","6":"3","7":"55110.24"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+<pre class="r"><code>predict_test &lt;- predict(model4, newdata=wine_test_df)
+predict_test</code></pre>
+<pre><code>##        1        2 
+## 6.768925 6.684910</code></pre>
+<pre class="r"><code>SSE_sample &lt;- sum((predict_test - wine_test_df$Price)^2)
+SSE_sample</code></pre>
+<pre><code>## [1] 0.06926281</code></pre>
+<pre class="r"><code>SST_sample &lt;- sum((mean(wine_df$Price) - wine_test_df$Price)^2)
+SST_sample</code></pre>
+<pre><code>## [1] 0.3369269</code></pre>
+<pre class="r"><code>R2_sample &lt;- 1 - (SSE_sample/SST_sample)
+R2_sample</code></pre>
+<pre><code>## [1] 0.7944278</code></pre>
+<p><span class="math display">\[Out-of-sample \ R^2 \ може \ да \ приема
+\ отрицателни \ стойности!\]</span></p>
 </div>
 
 

@@ -196,7 +196,7 @@ A toy manufacturer undertakes regular assessment of employee performance. This p
 Does this indicate that the new employee's output is significantly different from the average output? Test at the 5% significance level.
 
 ```{r}
-toys <- read_xlsx('toy_manufacturer.xlsx')
+toys <- read_xlsx('data/toy_manufacturer.xlsx')
 toys
 ```
 
@@ -224,3 +224,101 @@ z.test(toys$`Sample data`, mu=85, sigma.x=15, conf.level=0.95)
 ```
 
 We fail to reject the null hypothesis.
+
+## Упражнение 3 (17.10.2023)
+
+```{r}
+wine_df <- read.csv('data/wine.csv')
+wine_df
+```
+
+```{r}
+summary(wine_df)
+```
+
+```{r}
+model1 <- lm(Price ~ AGST, data=wine_df)
+summary(model1)
+```
+
+$$t-value = \frac{Estimate}{Std. Error}. Искаме \ да \ е \ (относително) \ голяма \ стойност.$$
+
+$$Pr(>|t|): p-value \ при \ тестване \ коефициентите \ \beta_i \ \ срещу \ H_0: \beta_i = 0. \ Искаме \ да \ е \ малка \ стойност. $$
+$$Adjusted \ R^2: проверяваме \ дали \ не \ сме \ включили \ прекалено \ много \ променливи.$$
+
+
+```{r}
+model2 <- lm(Price ~ .-Year, data=wine_df)
+summary(model2)
+```
+
+```{r}
+model1$residuals
+```
+
+```{r}
+SSE_model1 <- sum(model1$residuals^2)
+SSE_model1
+```
+
+```{r}
+SSE_model2 <- sum(model2$residuals^2)
+SSE_model2
+```
+
+**Проверка за мултиколинеарност между Age и FrancePop**
+
+(линейна зависимост между две "независими" променливи)
+
+```{r}
+plot(wine_df$Age, wine_df$FrancePop)
+```
+```{r}
+cor(wine_df$Age, wine_df$FrancePop)
+```
+
+```{r}
+cor(wine_df)
+```
+
+```{r}
+model3 <- lm(Price ~ AGST + HarvestRain + Age, data=wine_df)
+summary(model3)
+```
+
+```{r}
+model4 <- lm(Price ~ AGST + HarvestRain + Age + WinterRain, data=wine_df)
+summary(model4)
+```
+
+```{r}
+SSE_model4 <- sum(model4$residuals^2)
+SSE_model4
+```
+
+```{r}
+wine_test_df <- read.csv('data/wine_test.csv')
+wine_test_df
+```
+
+```{r}
+predict_test <- predict(model4, newdata=wine_test_df)
+predict_test
+```
+
+```{r}
+SSE_sample <- sum((predict_test - wine_test_df$Price)^2)
+SSE_sample
+```
+
+```{r}
+SST_sample <- sum((mean(wine_df$Price) - wine_test_df$Price)^2)
+SST_sample
+```
+
+```{r}
+R2_sample <- 1 - (SSE_sample/SST_sample)
+R2_sample
+```
+
+$$Out-of-sample \ R^2 \ може \ да \ приема \ отрицателни \ стойности!$$
