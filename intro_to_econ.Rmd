@@ -322,3 +322,110 @@ R2_sample
 ```
 
 $$Out-of-sample \ R^2 \ може \ да \ приема \ отрицателни \ стойности!$$
+
+## Упражнение 4 (24.10.2023)
+
+### Moneyball
+
+```{r}
+baseball <- read.csv('data/baseball.csv')
+baseball
+```
+
+```{r}
+moneyball <- subset(baseball, Year < 2002)
+moneyball
+```
+
+```{r}
+plot(
+  moneyball$W,
+  moneyball$Year,
+  xlim=c(70, 110),
+  pch=16,
+  xlab='Wins',
+  ylab='Year',
+  col=ifelse(moneyball$Playoffs==1, 'darkred', 'gray')
+)
+
+legend(
+  70,
+  2000, 
+  col=c('darkred', 'gray'),
+  legend=c('Playoffs', 'No playoffs'), 
+  pch=16
+)
+```
+
+```{r}
+moneyball$RD <- moneyball$RS - moneyball$RA
+moneyball
+```
+
+```{r}
+winsLR <- lm(W ~ RD, data=moneyball)
+summary(winsLR)
+```
+
+```{r}
+RunS <- lm(RS ~ OBP + SLG + BA, data=moneyball)
+summary(RunS)
+```
+
+BA е с отрицателно тегло → проверяваме за **мултиколинеарност**.
+
+
+```{r}
+cor(moneyball$BA, moneyball$SLG)
+```
+
+```{r}
+cor(moneyball$OBP, moneyball$SLG)
+```
+
+```{r}
+RunS2 <- lm(RS ~ OBP + SLG, data=moneyball)
+summary(RunS2)
+```
+
+
+```{r}
+RunA <- lm(RA ~ OOBP + OSLG, data=moneyball)
+summary(RunA)
+```
+
+```{r}
+OBP2001 <- moneyball$OBP[moneyball$Team == 'OAK' & moneyball$Year == 2001]
+SLG2001 <- moneyball$SLG[moneyball$Team == 'OAK' & moneyball$Year == 2001]
+
+OBP2001; SLG2001
+```
+
+### Факториране
+
+```{r}
+pisa_train <- read.csv('data/pisa2009train.csv', stringsAsFactors=TRUE)
+pisa_train
+```
+
+**Референтно ниво** - при категорни променливи е добре най-често срещаната да приема стойност 1.
+
+```{r}
+pisa_train <- na.omit(pisa_train)
+pisa_train
+```
+
+```{r}
+table(pisa_train$raceeth)
+```
+
+```{r}
+pisa_train$raceeth <- relevel(pisa_train$raceeth, ref='White')
+pisa_train
+```
+
+```{r}
+LR <- lm(grade ~ ., data=pisa_train)
+summary(LR)
+```
+
