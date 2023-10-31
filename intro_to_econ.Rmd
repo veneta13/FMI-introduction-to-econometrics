@@ -429,3 +429,66 @@ LR <- lm(grade ~ ., data=pisa_train)
 summary(LR)
 ```
 
+
+## Упражнение 5 (31.10.2023)
+
+```{r}
+library(caTools)
+```
+
+```{r}
+quality <- read.csv('data/quality.csv')
+quality
+```
+
+```{r}
+set.seed(88)
+```
+
+```{r}
+split <- sample.split(quality$PoorCare, SplitRatio=0.75)
+split
+```
+
+```{r}
+quality_train <- subset(quality, split==TRUE)
+quality_test <- subset(quality, split==FALSE)
+
+quality_train
+```
+
+```{r}
+quality_log <- glm(PoorCare ~ Narcotics + OfficeVisits, 
+                   data=quality_train, 
+                   family='binomial')
+
+summary(quality_log)
+```
+
+AIC = Akaike information criterion, искаме да е **минимално**
+
+```{r}
+predict_train <- predict(quality_log, type='response')
+predict_train
+```
+
+^ Вероятностите да имаме 1.
+
+```{r}
+quality[quality$MemberID == 106,]
+```
+
+```{r}
+summary(predict_train)
+```
+```{r}
+table(quality_train$PoorCare, predict_train >= 0.25)
+```
+
+```{r}
+table(quality_train$PoorCare, predict_train >= 0.35)
+```
+
+```{r}
+table(quality_train$PoorCare, predict_train >= 0.6)
+```
