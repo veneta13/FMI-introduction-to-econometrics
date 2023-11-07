@@ -492,3 +492,147 @@ table(quality_train$PoorCare, predict_train >= 0.35)
 ```{r}
 table(quality_train$PoorCare, predict_train >= 0.6)
 ```
+
+
+## Упражнение 6 (7.11.2023)
+
+**Receiver Operator Characteristic (ROC) curve и Area under the ROC Curve (AUC)**
+
+```{r}
+library('ROCR')
+```
+
+```{r}
+ROCR_prediction <- prediction(predict_train, quality_train$PoorCare)
+ROCR_performance <- performance(ROCR_prediction, 'tpr', 'fpr')
+```
+
+```{r}
+plot(
+  ROCR_performance,
+  colorize=TRUE,
+  print.cutoffs.at=seq(0, 1, 0.1),
+  text.adj=c(-0.6, 0.5)
+)
+```
+
+```{r}
+auc <- performance(ROCR_prediction, 'auc')@y.values
+as.numeric(auc)
+```
+
+```{r}
+predict_test <- predict(quality_log, type='response', newdata=quality_test)
+predict_test
+```
+
+```{r}
+table(quality_test$PoorCare, predict_test >= 0.3)
+```
+
+```{r}
+ROCR_prediction_test <- prediction(predict_test, quality_test$PoorCare)
+auc <- performance(ROCR_prediction_test, 'auc')@y.values
+as.numeric(auc)
+```
+
+```{r}
+polling_df <- read.csv('data/PollingData.csv')
+str(polling_df)
+```
+```{r}
+table(polling_df$Year)
+```
+
+```{r}
+summary(polling_df)
+```
+```{r}
+library('mice')
+```
+
+```{r}
+sample_polling <- polling_df[c(3:7)]
+sample_polling
+```
+
+```{r}
+set.seed(144)
+```
+
+```{r}
+imputed <- complete(mice(sample_polling, m=6))
+```
+
+```{r}
+polling_df$Rasmussen <- imputed$Rasmussen
+polling_df$SurveyUSA <- imputed$SurveyUSA
+polling_df
+```
+
+```{r}
+summary(polling_df)
+```
+
+```{r}
+polling_train <- subset(polling_df, Year == 2004 | Year == 2008)
+polling_train
+```
+
+```{r}
+polling_test <- subset(polling_df, Year == 2012)
+polling_test
+```
+
+```{r}
+table(polling_train$Republican)
+```
+
+```{r}
+table(sign(polling_train$Rasmussen))
+```
+
+```{r}
+table(polling_train$Republican, sign(polling_train$Rasmussen))
+```
+
+```{r}
+table(polling_train$Republican, sign(polling_train$Rasmussen))
+```
+
+
+```{r}
+cor(polling_train[c(3:7)])
+```
+
+```{r}
+polling_model1 <- glm(Republican ~ PropR, family='binomial', data=polling_train)
+summary(polling_model1)
+```
+
+Искаме голяма разлика между Null deviance > Residual deviance.
+
+```{r}
+polling_predict <- predict(polling_model1, type='response')
+polling_predict
+```
+
+```{r}
+table(polling_train$Republican, polling_predict >= 0.5)
+```
+
+
+```{r}
+polling_model2 <- glm(Republican ~ SurveyUSA + DiffCount, family='binomial', data=polling_train)
+summary(polling_model2)
+```
+
+```{r}
+polling_predict <- predict(polling_model2, type='response')
+polling_predict
+```
+
+```{r}
+table(polling_train$Republican, polling_predict >= 0.3)
+```
+
